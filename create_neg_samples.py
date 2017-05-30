@@ -8,6 +8,10 @@ vidCapture = cv2.VideoCapture('neg_frames.avi')
 success, image = vidCapture.read()
 print success
 count = 0
+
+if not os.path.isdir(os.path.join(os.getcwd(),'neg_samples')):
+    os.makedirs('neg_samples')
+
 while (vidCapture.isOpened()):
     success,image = vidCapture.read()
     if count >= 5000:
