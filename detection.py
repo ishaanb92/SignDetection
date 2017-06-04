@@ -17,7 +17,7 @@ gray = cv2.cvtColor(test_img_resize,cv2.COLOR_BGR2GRAY)
 left_sign = left_sign_classifier.detectMultiScale(gray,1.05,3)
 
 for (x,y,w,h) in left_sign:
-    cv2.rectangle(test_img_resize,(x,y),(x+w,y+h),(255,0,0),2)
+    cv2.rectangle(test_img_resize,(x,y),(x+w,y+h),(0,255,0),2)
 
 cv2.imshow('Detected',test_img_resize)
 cv2.waitKey(0)
