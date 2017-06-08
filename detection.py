@@ -8,16 +8,21 @@ left_classifier_path = os.path.join(os.getcwd(),'classifier_left_sign','cascade.
 left_sign_classifier = cv2.CascadeClassifier(left_classifier_path)
 
 # Read test img
-test_img = cv2.imread('blue.jpg')
-test_img_resize = cv2.resize(test_img,(640,480),interpolation = cv2.INTER_CUBIC)
-# Convert to grayscale
-gray = cv2.cvtColor(test_img_resize,cv2.COLOR_BGR2GRAY)
+cap = cv2.VideoCapture('sign_test.mp4')
 
+while (cap.isOpened()):
+    ret,frame = cap.read()
+    frameResize = cv2.resize(frame,(640,480),interpolation = cv2.INTER_CUBIC)
+    frameResizeGray = cv2.cvtColor(frameResize,cv2.COLOR_BGR2GRAY)
 # Detect the "left" sign
-left_sign = left_sign_classifier.detectMultiScale(gray,1.05,3)
+    left_sign = left_sign_classifier.detectMultiScale(frameResizeGray,1.05,3)
+    for (x,y,w,h) in left_sign:
+        cv2.rectangle(frameResize,(x,y),(x+w,y+h),(0,255,0),2)
 
-for (x,y,w,h) in left_sign:
-    cv2.rectangle(test_img_resize,(x,y),(x+w,y+h),(0,255,0),2)
+    cv2.imshow('Detected',frameResize)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
-cv2.imshow('Detected',test_img_resize)
-cv2.waitKey(0)
+cap.release()
+cv2.destroyAllWindows()
+
