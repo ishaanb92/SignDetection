@@ -13,12 +13,11 @@ right_sign_classifier = cv2.CascadeClassifier(right_classifier_path)
 stop_classifier_path = os.path.join(os.getcwd(),'classifier_stop_sign','cascade.xml')
 stop_sign_classifier = cv2.CascadeClassifier(stop_classifier_path)
 
-# Read test img
-cap = cv2.VideoCapture('video_new.h264')
+# Read video from USB webcam
+cap = cv2.VideoCapture(1)
 
 while (cap.isOpened()):
-    ret,frame = cap.read()
-    frameResize = cv2.resize(frame,(640,480),interpolation = cv2.INTER_CUBIC)
+    ret,frameResize = cap.read()
     frameResizeGray = cv2.cvtColor(frameResize,cv2.COLOR_BGR2GRAY)
 # Detect the "left" sign
     left_sign = left_sign_classifier.detectMultiScale(frameResizeGray,1.05,3)
